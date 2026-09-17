@@ -1,0 +1,65 @@
+{
+  "name": "cronet-request",
+  "version": "0.1.0",
+  "description": "Requests-compatible HTTP client backed by bundled Cronet shared libraries",
+  "main": "index.js",
+  "scripts": {
+    "install": "node scripts/install.js",
+    "build": "node-gyp rebuild",
+    "test": "node test/platform.test.js && node test/readme-demos.test.js && node test/unit.test.js && node test/sync.test.js && node test/integration.test.js && node test/streaming.test.js && node test/api-matrix.test.js",
+    "test:platform": "node test/platform.test.js",
+    "test:unit": "node test/unit.test.js",
+    "test:readme": "node test/readme-demos.test.js",
+    "test:sync": "node test/sync.test.js",
+    "test:integration": "node test/integration.test.js",
+    "test:streaming": "node test/streaming.test.js",
+    "test:wss": "node test/wss.test.js",
+    "test:external": "node test/external.test.js",
+    "test:tls-config": "node test/tls-config.test.js",
+    "test:ja3-matrix": "node test/ja3-matrix.test.js",
+    "test:proxy-socks5": "node test/proxy-socks5.test.js",
+    "test:proxy-tls": "node test/proxy-tls.test.js",
+    "test:sync-external": "node test/sync-external.test.js",
+    "test:matrix": "npm test && npm run test:tls-config && npm run test:proxy-socks5 && npm run test:wss && npm run test:external && npm run test:sync-external"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "win32",
+    "linux",
+    "darwin"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "files": [
+    "adapters",
+    "auth.js",
+    "binding.gyp",
+    "cookies.js",
+    "cronet-core.js",
+    "errors.js",
+    "headers.js",
+    "hooks.js",
+    "include",
+    "index.d.ts",
+    "index.js",
+    "lib",
+    "multipart.js",
+    "platform.js",
+    "prebuilds",
+    "request.js",
+    "response.js",
+    "scripts",
+    "session.js",
+    "src",
+    "status-codes.js",
+    "tls-profiles.js",
+    "utils.js",
+    "README.md"
+  ],
+  "gypfile": true,
+  "license": "BSD-3-Clause"
+}
