@@ -3,6 +3,24 @@
   "version": "0.1.0",
   "description": "Requests-compatible HTTP client backed by bundled Cronet shared libraries",
   "main": "index.js",
+  "types": "index.d.ts",
+  "author": "qq185863818",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qq185863818/cronet-request.git"
+  },
+  "homepage": "https://github.com/qq185863818/cronet-request#readme",
+  "bugs": {
+    "url": "https://github.com/qq185863818/cronet-request/issues"
+  },
+  "keywords": [
+    "cronet",
+    "http",
+    "http2",
+    "requests",
+    "tls",
+    "websocket"
+  ],
   "scripts": {
     "install": "node scripts/install.js",
     "build": "node-gyp rebuild",
@@ -34,6 +52,9 @@
     "x64",
     "arm64"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "adapters",
     "auth.js",
