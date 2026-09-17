@@ -46,7 +46,24 @@ jobs:
         run: npm test
 
       - name: Run external HTTP and WebSocket tests
+        shell: bash
         run: |
-          npm run test:external
-          npm run test:sync-external
-          npm run test:wss
+          retry() {
+            local max_attempts=3
+            local attempt=1
+            while true; do
+              "$@" && return 0
+              if [ "$attempt" -ge "$max_attempts" ]; then
+                return 1
+              fi
+              echo "External test failed; retrying (${attempt}/${max_attempts})..."
+              attempt=$((attempt + 1))
+              sleep 10
+            done
+          }
+          retry npm run test:tls-config
+          retry npm run test:proxy-socks5
+          npm run test:proxy-http
+          retry npm run test:wss
+          retry npm run test:external
+          retry npm run test:sync-external

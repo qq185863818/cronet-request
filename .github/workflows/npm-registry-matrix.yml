@@ -56,6 +56,24 @@ jobs:
         working-directory: npm-consumer/node_modules/cronet-request
         shell: bash
         run: |
-          npm run test:matrix
-          npm run test:ja3-matrix
+          retry() {
+            local max_attempts=3
+            local attempt=1
+            while true; do
+              "$@" && return 0
+              if [ "$attempt" -ge "$max_attempts" ]; then
+                return 1
+              fi
+              echo "External test failed; retrying (${attempt}/${max_attempts})..."
+              attempt=$((attempt + 1))
+              sleep 10
+            done
+          }
+          npm test
+          retry npm run test:tls-config
+          retry npm run test:proxy-socks5
           node test/proxy-http-local.test.js
+          retry npm run test:wss
+          retry npm run test:external
+          retry npm run test:sync-external
+          retry npm run test:ja3-matrix
