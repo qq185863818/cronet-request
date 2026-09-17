@@ -1,0 +1,61 @@
+name: npm-registry-install-matrix
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  npm-install:
+    name: npm install - ${{ matrix.name }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: linux-x64
+            runner: ubuntu-24.04
+          - name: linux-arm64
+            runner: ubuntu-24.04-arm
+          - name: macos-x64
+            runner: macos-15-intel
+          - name: macos-arm64
+            runner: macos-15
+          - name: windows-x64
+            runner: windows-2022
+          - name: windows-arm64
+            runner: windows-11-arm
+
+    steps:
+      - name: Check out test suite
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install the published package from npm
+        shell: bash
+        run: |
+          mkdir -p npm-consumer
+          cd npm-consumer
+          npm init -y
+          npm install --foreground-scripts --no-audit --no-fund cronet-request
+
+      - name: Attach repository tests to the installed package
+        shell: bash
+        run: |
+          node -e "const fs = require('node:fs'); const path = require('node:path'); const target = path.join('npm-consumer', 'node_modules', 'cronet-request'); fs.cpSync('test', path.join(target, 'test'), { recursive: true }); fs.copyFileSync('README.md', path.join(target, 'README.md')); fs.copyFileSync('README.en.md', path.join(target, 'README.en.md'));"
+
+      - name: Run the complete published-package test matrix
+        working-directory: npm-consumer/node_modules/cronet-request
+        shell: bash
+        run: |
+          npm run test:matrix
+          npm run test:ja3-matrix
+          node test/proxy-http-local.test.js

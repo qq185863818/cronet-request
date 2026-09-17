@@ -36,9 +36,10 @@
     "test:tls-config": "node test/tls-config.test.js",
     "test:ja3-matrix": "node test/ja3-matrix.test.js",
     "test:proxy-socks5": "node test/proxy-socks5.test.js",
+    "test:proxy-http": "node test/proxy-http-local.test.js",
     "test:proxy-tls": "node test/proxy-tls.test.js",
     "test:sync-external": "node test/sync-external.test.js",
-    "test:matrix": "npm test && npm run test:tls-config && npm run test:proxy-socks5 && npm run test:wss && npm run test:external && npm run test:sync-external"
+    "test:matrix": "npm test && npm run test:tls-config && npm run test:proxy-socks5 && npm run test:proxy-http && npm run test:wss && npm run test:external && npm run test:sync-external"
   },
   "engines": {
     "node": ">=18"
@@ -79,7 +80,8 @@
     "status-codes.js",
     "tls-profiles.js",
     "utils.js",
-    "README.md"
+    "README.md",
+    "README.en.md"
   ],
   "gypfile": true,
   "license": "BSD-3-Clause"

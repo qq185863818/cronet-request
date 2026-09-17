@@ -1,5 +1,7 @@
 # cronet-request
 
+[English documentation](README.en.md) | 中文文档
+
 cronet-request 是独立的 Node.js HTTP、Streaming 和 WebSocket 客户端。底层使用项目内的 Cronet native addon，并且只调用项目 `lib` 目录内与当前平台和架构匹配的 Cronet shared library。
 
 所有示例都使用下面的导入方式：
@@ -33,6 +35,26 @@ const cronet = require('cronet-request');
 同步请求会阻塞当前 Node.js 线程。异步请求返回 Promise，不阻塞事件循环。
 
 ## 安装
+
+### 从 npm 官方安装
+
+在业务项目中直接安装已发布的 npm 包：
+
+```bash
+npm install cronet-request
+```
+
+安装脚本会根据当前操作系统和 CPU 架构选择对应的 Cronet shared library；如果没有对应的预编译 addon，就会自动调用 node-gyp 编译 `jscronet.node`。安装完成后直接使用：
+
+```js
+const cronet = require('cronet-request');
+
+const response = cronet.get('https://httpbin.org/ip');
+console.log(response.json());
+response.close();
+```
+
+当前 npm 包支持 Windows、Linux、macOS 的 x64 和 arm64。首次从源码编译时，需要安装 Node.js 18+、Python 和当前平台的 C/C++ 编译工具链。
 
 ### 从本地 npm 包安装
 
@@ -100,6 +122,8 @@ windows-11-arm
 
 这六个 runner 分别覆盖 Linux x64、Linux arm64、macOS x64、macOS arm64、Windows x64 和 Windows arm64。
 
+另一个 workflow 会在相同的六个平台上创建全新的 consumer 项目，执行 `npm install cronet-request`，再通过已安装的 npm 包运行完整测试矩阵。这用于验证 registry 发布物的安装脚本、共享库选择和所有公开 API。
+
 ## 发布到 npm
 
 发布前先检查包内容：
@@ -122,7 +146,7 @@ npm publish --access public
 npm install cronet-request
 ```
 
-安装过程会根据当前平台和架构选择 Cronet shared library，并自动使用预编译 addon或调用 node-gyp 编译 addon。没有预编译 addon 的平台需要安装 Python 和对应的 C/C++ 编译工具链。
+安装过程会根据当前平台和架构选择 Cronet shared library，并自动使用预编译 addon 或调用 node-gyp 编译 addon。没有预编译 addon 的平台需要安装 Python 和对应的 C/C++ 编译工具链。
 
 ## 同步 API
 
@@ -1740,7 +1764,7 @@ npm test
 npm run test:readme
 ```
 
-该测试会提取 README 中的 64 个 JavaScript 代码块，逐个检查代码围栏、公共导入、CommonJS 语法、未定义的 demo 依赖、私有路径和已移除的功能说明，并在隔离的 mock transport 中执行每个 demo。真实网络行为由下面的外部和功能测试验证。
+该测试会提取 README 中的 65 个 JavaScript 代码块，并验证英文 README 中的 JavaScript 代码块；每个代码块都会检查代码围栏、公共导入、CommonJS 语法、未定义的 demo 依赖、私有路径和已移除的功能说明，并在隔离的 mock transport 中执行。真实网络行为由下面的外部和功能测试验证。
 
 ### 外部站点
 
@@ -1762,6 +1786,7 @@ https://httpbin.org/
 ```powershell
 npm run test:tls-config
 npm run test:proxy-socks5
+npm run test:proxy-http
 npm run test:wss
 ```
 
