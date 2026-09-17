@@ -7,7 +7,7 @@
   "author": "qq185863818",
   "repository": {
     "type": "git",
-    "url": "https://github.com/qq185863818/cronet-request.git"
+    "url": "git+https://github.com/qq185863818/cronet-request.git"
   },
   "homepage": "https://github.com/qq185863818/cronet-request#readme",
   "bugs": {
