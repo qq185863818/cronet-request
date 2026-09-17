@@ -94,7 +94,7 @@ ubuntu-24.04
 ubuntu-24.04-arm
 macos-15-intel
 macos-15
-windows-2025
+windows-2022
 windows-11-arm
 ```
 
