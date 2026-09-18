@@ -1,6 +1,6 @@
 {
   "name": "cronet-request",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Requests-compatible HTTP client backed by bundled Cronet shared libraries",
   "main": "index.js",
   "types": "index.d.ts",

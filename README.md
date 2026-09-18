@@ -10,6 +10,8 @@ cronet-request 是独立的 Node.js HTTP、Streaming 和 WebSocket 客户端。�
 const cronet = require('cronet-request');
 ```
 
+默认 User-Agent 为 `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36`。可以通过请求头 `User-Agent` 或 Engine 配置中的 `userAgent` 覆盖。
+
 ## 功能总览
 
 | 功能 | 状态 | 主要入口 |

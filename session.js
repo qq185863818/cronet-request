@@ -29,8 +29,10 @@ const {
   UnsupportedError,
 } = require('./errors');
 
+const DEFAULT_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36';
+
 const DEFAULT_HEADERS = {
-  'User-Agent': 'python-requests/2.34.2',
+  'User-Agent': DEFAULT_USER_AGENT,
   'Accept-Encoding': 'gzip, deflate, br',
   Accept: '*/*',
   Connection: 'keep-alive',
@@ -120,6 +122,7 @@ function normalizeRequestOptions(options = {}) {
 
 function cronetOptionsFromSettings(settings) {
   const result = { ...(settings.cronet || {}) };
+  if (result.userAgent === undefined) result.userAgent = DEFAULT_USER_AGENT;
   const tls = settings.tls;
   if (tls != null) {
     if (!tls || typeof tls !== 'object' || Array.isArray(tls)) {

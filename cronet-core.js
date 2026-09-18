@@ -10,6 +10,9 @@ const {
 } = require('./platform');
 
 const PLATFORM_KEY = platformKey();
+const DEFAULT_USER_AGENT =
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+  + '(KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36';
 
 function loadNativeAddon() {
   const candidates = [
@@ -372,6 +375,9 @@ function ensureInitialized(options = {}) {
   }
   initOptions = {
     ...prepareInitOptions(options),
+    userAgent: options.userAgent === undefined
+      ? DEFAULT_USER_AGENT
+      : options.userAgent,
     dllPath: libraryPath,
     websocketLibraryPath: options.websocketLibraryPath ||
       DEFAULT_WEBSOCKET_LIBRARY,

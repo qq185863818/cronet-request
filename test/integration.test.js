@@ -4,6 +4,10 @@ const assert = require('node:assert/strict');
 const http = require('node:http');
 const requests = require('..');
 
+const DEFAULT_USER_AGENT =
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+  + '(KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36';
+
 function startServer() {
   const server = http.createServer(async (request, response) => {
     if (request.url === '/redirect') {
@@ -44,6 +48,7 @@ function startServer() {
       contentType: request.headers['content-type'] || null,
       cookie: request.headers.cookie || null,
       header: request.headers['x-request-test'] || null,
+      userAgent: request.headers['user-agent'] || null,
     }));
   });
   return new Promise((resolve, reject) => {
@@ -63,6 +68,8 @@ async function main() {
     assert.equal(getBody.method, 'GET');
     assert.equal(getBody.url, '/echo?q=cronet+request&tag=a&tag=b');
     assert.equal(getBody.header, 'get');
+    assert.equal(getBody.userAgent, DEFAULT_USER_AGENT);
+    assert.equal(requests.cronet.engineOptions.userAgent, DEFAULT_USER_AGENT);
 
     const post = await client.asyncPost(`${base}/echo`, { json: { hello: 'cronet' } });
     const postBody = await post.json();

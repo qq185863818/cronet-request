@@ -10,6 +10,8 @@ All examples use this import:
 const cronet = require('cronet-request');
 ~~~
 
+The default User-Agent is `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36`. Override it with a request `User-Agent` header or the Engine `userAgent` option.
+
 ## Features
 
 | Feature | Entry points |
@@ -1461,4 +1463,3 @@ registry installation followed by the package test matrix
 4. Exact JA3 matching depends on the bundled library, extension order, GREASE, session state, and server behavior.
 5. randomizeExtensions: true intentionally produces different extension orders.
 6. The package supports Windows, Linux, and macOS on x64 and arm64.
-

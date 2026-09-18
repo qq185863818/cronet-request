@@ -2162,7 +2162,12 @@ napi_value NativeInit(napi_env env, napi_callback_info info) {
     ThrowError(env, "Cronet_EngineParams_Create failed");
     return nullptr;
   }
-  if (user_agent.empty()) user_agent = "jscronet/0.1.0";
+  if (user_agent.empty()) {
+    user_agent =
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/150.0.0.0 Safari/537.36";
+  }
   addon->api.Cronet_EngineParams_enable_check_result_set(params,
                                                          enable_check_result);
   addon->api.Cronet_EngineParams_user_agent_set(params, user_agent.c_str());
